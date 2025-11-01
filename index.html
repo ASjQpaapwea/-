@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浮木性别计算器 - 量子力学高精密计算</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(77, 208, 225, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(77, 208, 225, 0.5);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #4dd0e1, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            color: #cccccc;
+            font-size: 1.1rem;
+        }
+        
+        .question-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(40, 40, 60, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(77, 208, 225, 0.2);
+        }
+        
+        .question-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #4dd0e1;
+            font-weight: bold;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(50, 50, 70, 0.8);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .option:hover {
+            background: rgba(60, 60, 80, 0.9);
+            border-color: rgba(77, 208, 225, 0.3);
+            transform: translateX(5px);
+        }
+        
+        .option input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .option label {
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #4dd0e1, #26c6da);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(77, 208, 225, 0.3);
+        }
+        
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+        
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 15px;
+            border: 1px solid rgba(77, 208, 225, 0.3);
+            display: none;
+        }
+        
+        .result-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .calculation-process {
+            background: rgba(30, 30, 50, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4dd0e1;
+        }
+        
+        .final-result {
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 15px;
+            background: rgba(77, 208, 225, 0.2);
+            border-radius: 10px;
+            border: 2px solid #4dd0e1;
+            margin-top: 15px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .loading-dots {
+            display: inline-block;
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            40% { color: #4dd0e1; text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            60% { text-shadow: .25em 0 0 #4dd0e1, .5em 0 0 rgba(0,0,0,0); }
+            80%, 100% { text-shadow: .25em 0 0 #4dd0e1, .5em 0 0 #4dd0e1; }
+        }
+        
+        .quantum-text {
+            font-family: 'Courier New', monospace;
+            color: #4dd0e1;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>浮木性别计算器</h1>
+            <p>基于量子力学原理的高精密性别预测系统</p>
+        </div>
+        
+        <form id="genderCalculator">
+            <!-- 问题1：你要预测谁的性别 -->
+            <div class="question-section">
+                <div class="question-title">1. 你要预测谁的性别？</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q1_option1" name="question1" value="木琴" required>
+                        <label for="q1_option1">木琴</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q1_option2" name="question1" value="抚琴" required>
+                        <label for="q1_option2">抚琴</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题2：你吃早饭了吗 -->
+            <div class="question-section">
+                <div class="question-title">2. 你吃早饭了吗？</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q2_option1" name="question2" value="吃了" required>
+                        <label for="q2_option1">吃了</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2_option2" name="question2" value="没吃" required>
+                        <label for="q2_option2">没吃</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2_option3" name="question2" value="不知道我是草履虫" required>
+                        <label for="q2_option3">不知道我是草履虫</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题3：你吃午饭了吗 -->
+            <div class="question-section">
+                <div class="question-title">3. 你吃午饭了吗？</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q3_option1" name="question3" value="吃了" required>
+                        <label for="q3_option1">吃了</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3_option2" name="question3" value="没吃" required>
+                        <label for="q3_option2">没吃</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3_option3" name="question3" value="不知道我是草履虫" required>
+                        <label for="q3_option3">不知道我是草履虫</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题4：你吃晚饭了吗 -->
+            <div class="question-section">
+                <div class="question-title">4. 你吃晚饭了吗？</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q4_option1" name="question4" value="吃了" required>
+                        <label for="q4_option1">吃了</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4_option2" name="question4" value="没吃" required>
+                        <label for="q4_option2">没吃</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4_option3" name="question4" value="不知道我是草履虫" required>
+                        <label for="q4_option3">不知道我是草履虫</label>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="calculate-btn" onclick="calculateGender()">
+                开始量子力学计算
+            </button>
+        </form>
+        
+        <div class="loading" id="loading">
+            <div class="quantum-text">正在进行量子力学高精密计算<span class="loading-dots">...</span></div>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <div class="result-title">计算结果</div>
+            <div class="calculation-process" id="calculationProcess">
+                <!-- 计算过程将在这里显示 -->
+            </div>
+            <div class="final-result" id="finalResult">
+                <!-- 最终结果将在这里显示 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateGender() {
+            // 检查所有问题是否已回答
+            const form = document.getElementById('genderCalculator');
+            const questions = form.querySelectorAll('input[type="radio"]:checked');
+            
+            if (questions.length !== 4) {
+                alert('请回答所有问题！');
+                return;
+            }
+            
+            // 获取第一个问题的答案
+            const question1Answer = document.querySelector('input[name="question1"]:checked').value;
+            
+            // 显示加载动画
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultSection').style.display = 'none';
+            
+            // 模拟量子计算过程
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('resultSection').style.display = 'block';
+                
+                // 构建计算过程文本
+                let processText = `
+                    <div class="quantum-text">
+                        🚀 启动量子纠缠计算模块...<br>
+                        📊 分析时间-空间连续性...<br>
+                        🔬 测量波函数坍缩概率...<br>
+                        ⚛️ 计算薛定谔方程解...<br>
+                        🌌 验证多重宇宙假设...<br>
+                        ✅ 计算完成！
+                    </div>
+                `;
+                
+                document.getElementById('calculationProcess').innerHTML = processText;
+                
+                // 根据第一个问题的答案显示结果
+                let resultText = '';
+                if (question1Answer === '木琴') {
+                    resultText = '你的木琴是女的';
+                } else {
+                    resultText = '你的抚琴是男的';
+                }
+                
+                document.getElementById('finalResult').innerHTML = `
+                    <strong>${resultText}</strong><br>
+                    <small>基于量子力学高精密计算得出</small>
+                `;
+                
+                // 滚动到结果区域
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            }, 3000); // 3秒后显示结果
+        }
+        
+        // 为选项添加点击效果
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // 移除其他选项的选中样式
+                this.parentElement.querySelectorAll('.option').forEach(opt => {
+                    opt.style.background = 'rgba(50, 50, 70, 0.8)';
+                    opt.style.borderColor = 'transparent';
+                });
+                
+                // 添加选中样式
+                this.style.background = 'rgba(77, 208, 225, 0.2)';
+                this.style.borderColor = 'rgba(77, 208, 225, 0.5)';
+            });
+        });
+        
+        // 初始化选项样式
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    // 更新所有选项的样式
+                    document.querySelectorAll('.option').forEach(option => {
+                        const optionRadio = option.querySelector('input[type="radio"]');
+                        if (optionRadio.checked) {
+                            option.style.background = 'rgba(77, 208, 225, 0.2)';
+                            option.style.borderColor = 'rgba(77, 208, 225, 0.5)';
+                        } else {
+                            option.style.background = 'rgba(50, 50, 70, 0.8)';
+                            option.style.borderColor = 'transparent';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
